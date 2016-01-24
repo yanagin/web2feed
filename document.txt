@@ -1,0 +1,32 @@
+cd C:\Users\k-yanagihara\projects\web2feed
+java -cp libs/hsqldb.jar org.hsqldb.util.DatabaseManager
+
+DROP TABLE queue;
+CREATE TABLE queue (
+	id				INTEGER,
+	url				VARCHAR(256),
+	created_at		TIMESTAMP DEFAULT NOW(),
+	status			VARCHAR(64),
+	updated_at		TIMESTAMP
+);
+CREATE INDEX index_queue_1 ON queue (id);
+CREATE INDEX index_queue_2 ON queue (updated_at, created_at);
+DROP SEQUENCE seq_queue;
+CREATE SEQUENCE seq_queue START WITH 1 INCREMENT BY 1;
+
+DROP TABLE resource;
+CREATE TABLE resource(
+	id				INTEGER,
+	url				VARCHAR(256),
+	date			VARCHAR(128),
+	last_modified	VARCHAR(128),
+	title			VARCHAR(128),
+	description		VARCHAR(256),
+	body			CLOB,
+	hash_code		INTEGER,
+	created_at		TIMESTAMP DEFAULT NOW()
+);
+CREATE INDEX index_resource_1 ON resource (id);
+CREATE INDEX index_resource_2 ON resource (url);
+DROP SEQUENCE seq_resource;
+CREATE SEQUENCE seq_resource START WITH 1 INCREMENT BY 1;
